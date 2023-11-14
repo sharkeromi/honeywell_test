@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:honeywell_scanner/honeywell_scanner.dart';
 
 class HoneyController extends GetxController with WidgetsBindingObserver implements ScannerCallback {
-  HoneywellScanner honeywellScanner = HoneywellScanner(onScannerDecodeCallback: (scannedData) {
+  HoneywellScanner honeywellScanner = HoneywellScanner(onScannerDecodeCallback: (scannedData) async {
     // Display the scanned data here
     log(scannedData!.code.toString());
   }, onScannerErrorCallback: (error) {
@@ -16,6 +16,7 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
   final RxString errorMessage = RxString('');
   final RxBool isDeviceSupported = RxBool(false);
   final RxBool scannerEnabled = RxBool(false);
+  final RxBool isScannerRunning = RxBool(false);
   final RxBool scan1DFormats = RxBool(true);
   final RxBool scan2DFormats = RxBool(true);
 
@@ -49,15 +50,18 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
   }
 
   @override
-  void onDecoded(ScannedData? scannedData) {
+  void onDecoded(ScannedData? scannedData) async {
     this.scannedData = scannedData;
+    if (scannedData!.code != null) {
+      await onClick(2);
+    }
   }
 
   @override
   void onError(Exception error) {
     errorMessage.value = error.toString();
   }
-  
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
@@ -84,20 +88,31 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
       errorMessage.value = '';
       if (id == 1) {
         if (await honeywellScanner.startScanner()) {
+          await honeywellScanner.startScanning();
           scannerEnabled.value = true;
+          // bool temp = await honeywellScanner.isStarted();
+          // log(temp.toString());
         }
       } else if (id == 2) {
-        if (await honeywellScanner.stopScanner()) {
-          scannerEnabled.value = false;
+        if (scannerEnabled.value == true) {
+          await honeywellScanner.stopScanning();
+          if (await honeywellScanner.stopScanner()) {
+            // bool temp = await honeywellScanner.isStarted();
+            // log(temp.toString());
+            scannerEnabled.value = false;
+          }
         }
-      } else if (id == 3) {
-        await honeywellScanner.startScanning();
-      } else if (id == 4) {
-        await honeywellScanner.stopScanning();
       }
+      // else if (id == 3) {
+      //   // if (await honeywellScanner.isStarted()) {
+      //   log('1');
+      //   await honeywellScanner.startScanning();
+      //   // }
+      // } else if (id == 4) {
+      //   await honeywellScanner.stopScanning();
+      // }
     } catch (e) {
       errorMessage.value = e.toString();
-
       log(errorMessage.value);
     }
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:honeywell_test/controller.dart';
@@ -91,21 +90,21 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      child: const Text("Start Scanning"),
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
-                      onPressed: () => honeyController.onClick(3),
-                    ),
-                    ElevatedButton(
-                      child: const Text("Stop Scanning"),
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green.shade700)),
-                      onPressed: () => honeyController.onClick(4),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     ElevatedButton(
+                //       child: const Text("Start Scanning"),
+                //       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                //       onPressed: () => honeyController.onClick(3),
+                //     ),
+                //     ElevatedButton(
+                //       child: const Text("Stop Scanning"),
+                //       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green.shade700)),
+                //       onPressed: () => honeyController.onClick(4),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
