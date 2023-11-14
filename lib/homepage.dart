@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:honeywell_test/controller.dart';
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(color: honeyController.scannerEnabled.value ? Colors.blue : Colors.orange),
                 ),
                 const SizedBox(height: 8),
-                if (honeyController.scannedData != null && honeyController.errorMessage == '')
+                if (honeyController.scannedData != null && honeyController.errorMessage.value == '')
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color, height: 0.8), children: [
@@ -47,7 +48,7 @@ class HomePage extends StatelessWidget {
                     ]),
                   ),
                 const SizedBox(height: 8),
-                if (honeyController.errorMessage != '') ...[
+                if (honeyController.errorMessage.value != '') ...[
                   Text(
                     'Error: ${honeyController.errorMessage.value}',
                     textAlign: TextAlign.center,
@@ -74,37 +75,37 @@ class HomePage extends StatelessWidget {
                 //   },
                 // ),
                 const SizedBox(height: 16),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     ElevatedButton(
-                //       child: const Text("Start Scanner"),
-                //       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
-                //       onPressed: () => honeyController.onClick(1),
-                //     ),
-                //     ElevatedButton(
-                //       child: const Text("Stop Scanner"),
-                //       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue.shade700)),
-                //       onPressed: () => honeyController.onClick(2),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(height: 16),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     ElevatedButton(
-                //       child: const Text("Start Scanning"),
-                //       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
-                //       onPressed: () => honeyController.onClick(3),
-                //     ),
-                //     ElevatedButton(
-                //       child: const Text("Stop Scanning"),
-                //       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green.shade700)),
-                //       onPressed: () => honeyController.onClick(4),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: const Text("Start Scanner"),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                      onPressed: () => honeyController.onClick(1),
+                    ),
+                    ElevatedButton(
+                      child: const Text("Stop Scanner"),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue.shade700)),
+                      onPressed: () => honeyController.onClick(2),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      child: const Text("Start Scanning"),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                      onPressed: () => honeyController.onClick(3),
+                    ),
+                    ElevatedButton(
+                      child: const Text("Stop Scanning"),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green.shade700)),
+                      onPressed: () => honeyController.onClick(4),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -112,4 +113,13 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  // @override
+  // void onDecoded(ScannedData? scannedData) {
+  //   honeyController.scannedData = scannedData;
+  // }
+  // @override
+  // void onError(Exception error) {
+  //   honeyController.errorMessage.value = error.toString();
+  // }
 }

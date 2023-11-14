@@ -10,6 +10,7 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
     log(scannedData!.code.toString());
   }, onScannerErrorCallback: (error) {
     // Handle the error here
+    log(error.toString());
   });
   ScannedData? scannedData;
   final RxString errorMessage = RxString('');
@@ -47,10 +48,12 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
     honeywellScanner.setProperties(properties);
   }
 
+  @override
   void onDecoded(ScannedData? scannedData) {
     this.scannedData = scannedData;
   }
 
+  @override
   void onError(Exception error) {
     errorMessage.value = error.toString();
   }
