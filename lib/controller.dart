@@ -57,7 +57,8 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
   void onError(Exception error) {
     errorMessage.value = error.toString();
   }
-
+  
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     switch (state) {
