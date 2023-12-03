@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:honeywell_test/binder.dart';
-import 'package:honeywell_test/homepage.dart';
+import 'package:honeywell_test/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      initialRoute: krHomePage,
+        getPages: routes,
     );
   }
 }

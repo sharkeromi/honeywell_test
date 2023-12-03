@@ -37,6 +37,9 @@ dependencies:
   honeywell_scanner: ^5.0.0+2
   get: ^4.6.6
   permission_handler: ^11.0.1
+  qrcode_barcode_scanner: ^2.0.1
+  flutter_barcode_scanner: ^2.0.0
+  flutter_pda_scanner: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:honeywell_test/controller.dart';
-import 'package:honeywell_test/routes.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class Honeywell extends StatelessWidget {
+  Honeywell({super.key});
   final HoneyController honeyController = Get.find<HoneyController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Honeywell scanner example'),
+        title: const Text('Honeywell scanner'),
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -28,7 +27,6 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(color: honeyController.isDeviceSupported.value ? Colors.green : Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  if (honeyController.isDeviceSupported.value)
                     Text(
                       'Scanner: ${honeyController.scannerEnabled.value ? "Started" : "Stopped"}',
                       style: TextStyle(color: honeyController.scannerEnabled.value ? Colors.blue : Colors.orange),
@@ -50,8 +48,6 @@ class HomePage extends StatelessWidget {
                         TextSpan(text: '${honeyController.scannedData?.charset}\n\n', style: const TextStyle(fontWeight: FontWeight.bold)),
                       ]),
                     ),
-                  if (!honeyController.isDeviceSupported.value)
-                    Text('Scanned data: ${honeyController.scanValue}', style: const TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   if (honeyController.errorMessage.value != '') ...[
                     Text(
@@ -80,7 +76,6 @@ class HomePage extends StatelessWidget {
                   //   },
                   // ),
                   const SizedBox(height: 10),
-                  if (honeyController.isDeviceSupported.value)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -153,51 +148,4 @@ class HomePage extends StatelessWidget {
   // void onError(Exception error) {
   //   honeyController.errorMessage.value = error.toString();
   // }
-}
-
-class HomePage2 extends StatelessWidget {
-  HomePage2({super.key});
-  final HoneyController honeyController = Get.find<HoneyController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Scanner test'),
-      ),
-      body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Obx(() => ElevatedButton(
-                  onPressed: honeyController.isDeviceSupported.value
-                      ? () {
-                          Get.toNamed(krHoneywell);
-                        }
-                      : null,
-                  child: const Text('Honeywell Scanner'))),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(krExternal);
-                  },
-                  child: const Text('External Scanner')),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(krDevice);
-                  },
-                  child: const Text('Device Scanner')),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(krDevice2);
-                  },
-                  child: const Text('Device Scanner 2')),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

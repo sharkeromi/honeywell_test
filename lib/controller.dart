@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:honeywell_scanner/honeywell_scanner.dart';
+import 'package:qrcode_barcode_scanner/qrcode_barcode_scanner.dart';
 
 class HoneyController extends GetxController with WidgetsBindingObserver implements ScannerCallback {
   HoneywellScanner honeywellScanner = HoneywellScanner(onScannerDecodeCallback: (scannedData) async {
@@ -13,12 +14,14 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
     log(error.toString());
   });
   ScannedData? scannedData;
+  final RxString scanValue = RxString('');
   final RxString errorMessage = RxString('');
   final RxBool isDeviceSupported = RxBool(false);
   final RxBool scannerEnabled = RxBool(false);
   final RxBool isScannerRunning = RxBool(false);
   final RxBool scan1DFormats = RxBool(true);
   final RxBool scan2DFormats = RxBool(true);
+
 
   static const BTN_START_SCANNER = 0, BTN_STOP_SCANNER = 1, BTN_START_SCANNING = 2, BTN_STOP_SCANNING = 3;
 
@@ -27,6 +30,9 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
     honeywellScanner.scannerCallback = this;
+    QrcodeBarcodeScanner(onScannedCallback: (String value) {
+      scanValue.value = value;
+    });
     init();
   }
 
@@ -53,6 +59,7 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
   void onDecoded(ScannedData? scannedData) async {
     this.scannedData = scannedData;
     if (scannedData!.code != null) {
+      stringManipulation(scannedData.code);
       await onClick(2);
     }
   }
@@ -133,6 +140,44 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
         TextSpan(text: '${scannedData?.charset}\n\n', style: const TextStyle(fontWeight: FontWeight.bold)),
       ]),
     );
+  }
+
+  // String data = 'Title: custom stop 1 Address: 20/4, pallabi, mirror-12, Dhaka, Bangladesh Date: 12-07-2023. Time: 10:00 - 12:00 Comment: habbeajd aoidjas';
+
+  final TextEditingController title = TextEditingController();
+  final TextEditingController address = TextEditingController();
+  final TextEditingController date = TextEditingController();
+  final TextEditingController time = TextEditingController();
+  final TextEditingController comment = TextEditingController();
+
+  void stringManipulation(value) {
+    List<String> tempSplit;
+    List<String> splitValue = value.split('Address:');
+    if (splitValue[0].toString().contains('Title:') && splitValue[1].toString().contains('Date:')) {
+      tempSplit = splitValue[0].split(':');
+      if (tempSplit[0].toString().contains('Title')) {
+        title.text = tempSplit[1];
+        tempSplit.clear();
+      }
+    }
+    //* title split
+    tempSplit = splitValue[1].split('Date:');
+    if (tempSplit[1].toString().contains('Time:')) {
+      address.text = tempSplit[0];
+    }
+    //* Address split
+    splitValue.clear();
+    splitValue = tempSplit[1].split('Time:');
+    if (splitValue[1].toString().contains('Comment:')) {
+      date.text = splitValue[0];
+    }
+    //* Date split
+    tempSplit.clear();
+    tempSplit = splitValue[1].split('Comment:');
+    time.text = tempSplit[0];
+    comment.text = tempSplit[1];
+    tempSplit.clear();
+    splitValue.clear();
   }
 
   @override
