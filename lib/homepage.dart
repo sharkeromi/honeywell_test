@@ -172,28 +172,30 @@ class HomePage2 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Obx(() => ElevatedButton(
-                  onPressed: honeyController.isDeviceSupported.value
-                      ? () {
-                          Get.toNamed(krHoneywell);
-                        }
-                      : null,
-                  child: const Text('Honeywell Scanner'))),
+              // Obx(() =>
+              // ElevatedButton(
+              //     onPressed: honeyController.isDeviceSupported.value
+              //         ? () {
+              //             Get.toNamed(krHoneywell);
+              //           }
+              //         : null,
+              //     child: const Text('Honeywell Scanner'))),
               ElevatedButton(
                   onPressed: () {
+                    honeyController.scanValue.value = '';
                     Get.toNamed(krExternal);
                   },
                   child: const Text('External Scanner')),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(krDevice);
-                  },
-                  child: const Text('Device Scanner')),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(krDevice2);
-                  },
-                  child: const Text('Device Scanner 2')),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       Get.toNamed(krDevice);
+              //     },
+              //     child: const Text('Device Scanner')),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       Get.toNamed(krDevice2);
+              //     },
+              //     child: const Text('Device Scanner 2')),
             ],
           ),
         ),

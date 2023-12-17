@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:honeywell_scanner/honeywell_scanner.dart';
+import 'package:honeywell_test/routes.dart';
 import 'package:qrcode_barcode_scanner/qrcode_barcode_scanner.dart';
 
 class HoneyController extends GetxController with WidgetsBindingObserver implements ScannerCallback {
@@ -22,7 +23,6 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
   final RxBool scan1DFormats = RxBool(true);
   final RxBool scan2DFormats = RxBool(true);
 
-
   static const BTN_START_SCANNER = 0, BTN_STOP_SCANNER = 1, BTN_START_SCANNING = 2, BTN_STOP_SCANNING = 3;
 
   @override
@@ -32,6 +32,9 @@ class HoneyController extends GetxController with WidgetsBindingObserver impleme
     honeywellScanner.scannerCallback = this;
     QrcodeBarcodeScanner(onScannedCallback: (String value) {
       scanValue.value = value;
+      if (scanValue.value != '') {
+        Get.toNamed(krLayer2);
+      }
     });
     init();
   }

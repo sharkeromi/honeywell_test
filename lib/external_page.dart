@@ -24,6 +24,22 @@ class External extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       Get.toNamed(krLayer1);
+                    //     },
+                    //     child: const Text('Go to Layer 1')),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    ElevatedButton(
+                        onPressed: () {
+                          honeyController.scanValue.value = '';
+                        },
+                        child: const Text('Reset')),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const Text('*Start scanning with your device to get scanned data*',
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: cIconColor)),
                     Text('Scanned data: \n${honeyController.scanValue}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
